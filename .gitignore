@@ -34,6 +34,6 @@
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
-database.yml
+/config/database.yml
 localhost.pem
 localhost-key.pem
