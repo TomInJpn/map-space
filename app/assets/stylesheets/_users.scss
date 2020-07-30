@@ -1,0 +1,73 @@
+#menu{
+  ~.menu{
+    >#user_registration,>#user_password,>#user_edit{
+      #error_explanation{position:fixed;top:1vh;}
+    }
+    >#user_password{
+      form{
+        .actions{
+          input{width:50vw;}
+        }
+      }
+    }
+    >#user_edit{
+      h2{top:15vh;}
+      h3{top:85vh;
+        +p{width:98vw;top:90vh;text-align:right;}
+      }
+      form.edit_user{bottom:20vh;
+        .field{
+          i{display:block;}
+        }
+        .actions{
+          input{font-size:2vw;}
+        }
+        div:nth-of-type(n+6){
+          input{font-size:4vw;}
+        }
+      }
+      form.button_to{
+        input{width:30vw;height:4vh;font-size:3vw;border:0;cursor:pointer;}
+      }
+    }
+  }
+}
+
+
+
+
+@media screen and (min-width: 481px){
+
+  #menu{
+    ~.menu{
+      >#user_password{
+        form{
+          .actions{
+            input{width:30vw;}
+          }
+        }
+      }
+      >#user_edit{
+        h2{top:29vh;}
+        form.edit_user{
+          #error_explanation{top:8vh;}
+          .field{
+            &:nth-last-of-type(2){margin-top:10vh;}
+          }
+          .actions{
+            input{font-size:14px!important;}
+          }
+        }
+        form.button_to{bottom:1vh;right:1vw;
+          input{width:20vw;height:4vh;font-size:14px;}
+        }
+        form.new_user{
+          .actions{
+            input{font-size:14px;}
+          }
+        }
+      }
+    }
+  }
+
+}

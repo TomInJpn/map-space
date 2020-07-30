@@ -1,0 +1,15 @@
+%input#menu{type:"checkbox",style:"display:none;",checked:"checked"}
+
+.menu
+  #user_password
+    %h2 Forgot your password?
+    = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+      = render "devise/shared/error_messages", resource: resource
+      .field
+        = f.label :email
+        = f.email_field :email, autofocus: true, autocomplete: "email",autocomplete:"off"
+      .actions
+        = f.submit "Send me reset password"
+    = link_to "Start page",root_path
+#x
+#y

@@ -37,3 +37,4 @@ yarn-debug.log*
 /config/database.yml
 localhost.pem
 localhost-key.pem
+.DS_Store

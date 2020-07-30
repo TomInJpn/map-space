@@ -1,0 +1,35 @@
+!!!
+%html{lang:"ja"}
+  %head
+    %meta{content:"text/html; charset=UTF-8","http-equiv":"Content-Type"}
+    %meta{name:"description",content:"あなただけの地図を作りませんか？マップスペースは地図に付箋をつけるように手軽にご使用頂けるアプリです。"}
+    %meta{name:"viewport",content:"width=device-width,initial-scale=1.0"}
+    = csrf_meta_tags
+    = csp_meta_tag
+    = javascript_pack_tag 'application',defer:true
+    = stylesheet_link_tag 'application',media: 'all'
+    %title あなただけの地図ができる。-MapSpace-
+  %body
+    #mymap
+
+    #center_marker
+
+    = yield
+
+    #tag_create
+      = form_with url:tags_path,class: :tag_form,method: :post,local:true do |f|
+        = f.hidden_field :x
+        = f.hidden_field :y
+        - if user_signed_in?
+          = f.hidden_field :user_id,value: current_user.id
+          = f.text_field :title,placeholder:'marker title',autofocus:true,class: :tag_form__title,autocomplete:"off"
+          = f.submit '作成',class: :tag_form__submit
+
+    -if user_signed_in? && @tags
+      - @tags.each{|tag|
+      %span.tag__data
+        %span{name:"tag__id"}= tag.id
+        %span{name:"tag__x"}= tag.x
+        %span{name:"tag__y"}= tag.y
+        %span{name:"tag__title"}= tag.title
+      - }
