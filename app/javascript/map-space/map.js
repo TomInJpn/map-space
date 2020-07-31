@@ -31,12 +31,15 @@ if(navigator.geolocation)
         popup_delete[i].addEventListener('click',function(e){(delete_anchor[0].style.display=="block")? delete_anchor[0].style.display="none":delete_anchor[0].style.display="block"});
       }
 
-      // L.tileLayer('http://tile.openstreetmap.jp/{z}/{x}/{y}.png',{
-      //   attribution: "<a href='http://osm.org/copyright' rel='noreferrer' target='_blank'>OpenStreetMap</a> contributors"
-      // }).addTo(map);
-      L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png',{
-        attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' rel='noreferrer' target='_blank'>地理院タイル</a>"
+      L.tileLayer('https://tile.openstreetmap.jp/{z}/{x}/{y}.png',{
+        attribution: "<a href='http://osm.org/copyright' rel='noreferrer' target='_blank'>OpenStreetMap</a> contributors"
       }).addTo(map);
+      // L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png',{
+      //   attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' rel='noreferrer' target='_blank'>地理院タイル</a>"
+      // }).addTo(map);
+      // L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',{
+	    //   attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
+      // }).addTo(map);
     }
   );
 }

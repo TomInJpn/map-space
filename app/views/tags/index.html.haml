@@ -23,10 +23,10 @@
       %input#turn-tags{name:"group_page",type:"radio",style:"display:none;"}
       %label.turn-right{for:"turn-tags"}
       %h2 Group create
-      %form
+      =form_with url:groups_path,class: :create_group,method: :post,local:true do |f|
         .field
           %label Group name
-          %input{type:"textbox"}
+          = f.text_field :name,placeholder:"Group name",class: :group_form_name,autocomplete:"off"
         .field
           %label search Email
           %input{type:"email"}
@@ -92,7 +92,8 @@
             .tag-name aheahe
             .del_button
         .actions
-          %input{type:"submit",value:"Create"}
+          = f.hidden_field :user_id,value: current_user.id
+          = f.submit 'Create',class: :group_form__submit
   -else
     %input#info{name:"menu_page",type:"radio",style:"display:none;"}
     -unless flash[:error].nil?

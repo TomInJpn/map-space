@@ -5,6 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   validates :name, presence: true
   has_many:tags,dependent: :destroy
+  has_many:group_users,dependent: :destroy
+  has_many:groups,through: :group_users
   def remember_me
     true
   end

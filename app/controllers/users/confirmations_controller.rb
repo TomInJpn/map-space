@@ -12,9 +12,10 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   # end
 
   # GET /resource/confirmation?confirmation_token=abcdef
-  # def show
-  #   super
-  # end
+  def show
+    super
+    Group.create(group_params)
+  end
 
   # protected
 
@@ -27,4 +28,13 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   # def after_confirmation_path_for(resource_name, resource)
   #   super(resource_name, resource)
   # end
+
+  private
+  def group_params
+    params[:name]="none"
+    new_user_id=User.find_by(confirmation_token:params[:confirmation_token]).id
+    params[:user_id]=new_user_id
+    params[:user_ids]=Array[new_user_id]
+    params.permit(:name,:user_id,user_ids:[])
+  end
 end

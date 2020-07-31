@@ -29,6 +29,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # DELETE /resource
   def destroy
     User.find(current_user.id).destroy
+    Group.where(user_id:current_user.id).delete_all
     super
   end
 
