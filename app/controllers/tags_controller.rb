@@ -1,6 +1,8 @@
 class TagsController < ApplicationController
   def index
-    @tags=Tag.where(user_id:current_user.id) if user_signed_in?
+    if user_signed_in?
+      @groups=Group.includes(:users,:tags).where(users:{id:current_user.id})
+    end
   end
   def create
     Tag.create(tag_params)
@@ -11,7 +13,6 @@ class TagsController < ApplicationController
 
   private
   def tag_params
-    # params[:group_ids]=Array[params[:group_id]]
-    params.permit(:title,:x,:y,:user_id,group_ids:[])
+    params.permit(:title,:x,:y,:user_id,group_ids:[]).merge(user_id:current_user.id)
   end
 end

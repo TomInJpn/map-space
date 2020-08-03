@@ -3,19 +3,36 @@
 
 *{margin:0;padding:0;box-sizing:border-box;text-decoration:none;list-style:none;font-family:system-ui;}
 
+body{background:lightgray;}
+
 #mymap{height:94vh;z-index:0;}
 
-#center_marker{position:fixed;top:calc(47vh - 10px);left:calc(50% - 10px);width:20px;height:20px;z-index:1;
+#center_marker{position:fixed;top:calc(47vh - 10px);left:calc(50% - 10px);width:20px;height:20px;z-index:1;pointer-events:none;
   &::before,&::after{position:absolute;top:8px;left:2px;content:'';display:inline-block;width:16px;height:16px;border-top:4px solid #f00;}
   &::after{top:0;left:-6px;transform:rotate(90deg);}
 }
 
-#tag_create{background:rgba(0,0,0,0.5);width:100vw;height:6vh;padding:1vh 0;overflow:hidden;
-  .tag_form{display:flex;height:4vh;
-    &__title{width:67%;height:4vh;border:0;margin:0 1%;padding:1%;font-size:4vw;}
-    &__submit{width:30%;height:4vh;font-size:4vw;border:0;cursor:pointer;}
+#tag_group--label{position:absolute;left:3vw;bottom:1.5vh;border-style:solid;border-width:0 3vw 3vh 3vw;border-color:transparent transparent lightgray transparent;cursor:pointer;z-index:1;transition:0.3s;}
+
+#tag_create{background:rgba(0,0,0,0.5);width:100vw;height:6vh;padding:1vh 0;overflow:hidden;position:absolute;bottom:0;transition:0.3s;
+  .tag_form{display:flex;flex-wrap:wrap;height:4vh;
+    &__title,&__submit{font-size:4vw;height:4vh;border:0;}
+    &__title{width:66vw;margin-left:12vw;padding:1vw;}
+    &__submit{width:20vw;margin-left:1vw;cursor:pointer;}
+    &__group{width:100vw;display:flex;
+      label{background:palevioletred;display:block;height:4vh;line-height:4vh;margin:2vh;padding:0 2vw;border-radius:2vh;font-size:4vw;text-align:center;color:white;}
+      input{display:none;
+        &:checked+label{background:cornflowerblue;}
+      }
+    }
+    &__text{
+      textarea{width:98vw;height:22vh;margin:0.5vh 1vw;padding:1vw;}
+    }
   }
 }
+
+#taggroup_checkbox:checked~#tag_create{height:36vh;}
+#taggroup_checkbox:checked~#tag_group--label{bottom:31.5vh;transform:rotateX(180deg);}
 
 #user_checkbox+#user_checkbox--label,#menu+#menu-label{background:rgba(255,255,255,0.8);display:block;position:fixed;width:10vw;height:10vw;top:1vw;border-radius:1vw;text-align:center;cursor:pointer;}
 
@@ -98,7 +115,7 @@
 
 .leaflet-popup-content{text-align:center;}
 .leaflet-popup-content a{display:none;background:azure;padding:5px;position:fixed;top:0;right:0;box-shadow:0 10px 10px 0 rgba(0,0,0,0.2);border-radius:2px;}
-.tag__data{display:none;}
+.tag_group{display:none;}
 
 
 
@@ -106,9 +123,18 @@
 
 @media screen and (min-width: 481px){
 
+  #tag_group--label{left:1vw;border-width:0 2vw 3vh 2vw;}
+
   #tag_create{
     .tag_form{
-      &__title,&__submit{font-size:14px;}
+      &__title,&__submit{font-size:2vh;}
+      &__title{width:72vw;margin-left:6vw;padding:1vh;}
+      &__group{
+        label{font-size:2vh;}
+      }
+      &__text{
+        textarea{width:98vw;height:22vh;margin:0.5vh 1vw;padding:1vw;}
+      }
     }
   }
 
@@ -117,7 +143,7 @@
   #user_checkbox{
     &--label{left:50px;
       &::before{border-radius:7px 7px 0 0;top:15px;bottom:5px;left:5px;right:5px;}
-      &::after{border-radius:50%;top:5px;bottom:14px;left:10px;right:10px;}
+      &::after{border-radius:50%;top:5px;bottom:15px;left:10px;right:10px;}
     }
     &--menu{left:45vw;
       li{margin-bottom:6vh;
@@ -141,24 +167,24 @@
         >label{width:10vw;height:10vh;top:45vh;
           &::before{top:4vh;border:1vh solid transparent;}
         }
-        h1,h2,h3{font-size:30px;}
+        h1,h2,h3{font-size:5vh;}
       }
       >#user_session,>#user_registration,>#user_password,>#user_edit,>#group_create{
         form{
           div{width:99vw;
-            label,span,i{font-size:14px;}
-            a,em{font-size:14px;}
+            label,span,i{font-size:2vh;}
+            a,em{font-size:2vh;}
           }
           .field{margin-bottom:1vh;
-            input{width:30vw;padding:0.5vh 5px;font-size:14px;}
+            input{width:30vw;padding:0.5vh 5px;font-size:2vh;}
           }
           .actions{
-            input{width:20%;height:4vh;font-size:14px;}
+            input{width:20%;height:4vh;font-size:2vh;}
           }
         }
-        a{font-size:14px;}
+        a{font-size:2vh;}
       }
-      >label,>a{top:50px;left:85vw;line-height:32px;width:15vw;font-size:14px;}
+      >label,>a{top:50px;left:85vw;line-height:32px;width:15vw;font-size:2vh;}
       >a:last-of-type{top:82px;}
     }
   }

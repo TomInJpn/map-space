@@ -32,9 +32,8 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   private
   def group_params
     params[:name]="none"
-    new_user_id=User.find_by(confirmation_token:params[:confirmation_token]).id
-    params[:user_id]=new_user_id
-    params[:user_ids]=Array[new_user_id]
+    params[:user_id]=User.find_by(confirmation_token:params[:confirmation_token]).id
+    params[:user_ids]=Array[params[:user_id]]
     params.permit(:name,:user_id,user_ids:[])
   end
 end

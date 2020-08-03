@@ -31,8 +31,8 @@
         #searched_tags,#group_tags{
           >div div{
             &.group-name,&.tag-name{height:5vh;text-align:left;overflow-x:scroll;}
-            &.group-name{width:50%;margin:0 3% 0 0;}
-            &.tag-name{width:30%;margin:0;}
+            &.group-name{width:40%;margin:0 3% 0 0;}
+            &.tag-name{width:40%;margin:0;}
           }
         }
         #searched_tags{
@@ -91,6 +91,7 @@
         >label{display:none;}
         form{
           .field{width:48vw;
+            div{font-size:2vh;}
             div[class$="button"]{margin-left:3%;font-size:2vh;}
             &:nth-of-type(n+1){left:0;}
             &:nth-of-type(n+5){left:50vw;}
