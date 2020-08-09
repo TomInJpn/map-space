@@ -1,4 +1,3 @@
-
 -if user_signed_in?
   %input#user_checkbox{type:"checkbox",style:"display:none;"}
   %label#user_checkbox--label{for:"user_checkbox"}
@@ -22,49 +21,29 @@
       %input#turn-tags{name:"group_page",type:"radio",style:"display:none;"}
       %label.turn-right{for:"turn-tags"}
       %h2 Group create
-      =form_with url:groups_path,class: :create_group,method: :post,local:true do |f|
+      =form_with url:groups_path,id: :create_group,class: :create_group,method: :post,local:true do |f|
         .field
           %label Group name
           = f.text_field :name,placeholder:"Group name",class: :group_form_name,autocomplete:"off"
         .field
           %label search Email
-          %input{type:"email"}
+          %input{id:"searchEmail",name:"email",type:"email",placeholder:"e@mail",value:""}
         .field#searched_member
-          %span hogehoge
-          .add_button
         .field#group_members
-          %div
-            %span aheaheaheaheaheaheah
-            .del_button
-          %div
-            %span 藤本太郎喜左衛門将時
-            .del_button
-          %div
-            %span aheahe
-            .del_button
-          %div
-            %span aheahe
-            .del_button
-          %div
-            %span aheahe
-            .del_button
+          .user__data{style:"display:none;"}
+            %input{name:"user_ids[]",value:"#{current_user.id}",type:"checkbox",checked:"checked"}
+            %span{name:"user__email"}= "#{current_user.email}"
         .field#searched_tags
-          -if user_signed_in? && @groups
-            - @groups.each do |group|
-              - group.tags.each do |tag|
-                .tag__data
-                  %span{name:"group__id",style:"display:none;"}= group.id
-                  .group-name{name:"group__name"}= group.name
-                  %span{name:"tag__id",style:"display:none;"}= tag.id
-                  %span{name:"tag__x",style:"display:none;"}= tag.x
-                  %span{name:"tag__y",style:"display:none;"}= tag.y
-                  .tag-name{name:"tag__title"}= tag.title
-                  .add_button
+          -if user_signed_in? && @tags
+            - @tags.each do |tag|
+              .tag__data
+                %input{id:"tag_ids_#{tag.id}",name:"tag_ids[]",style:"display:none;",type:"checkbox",value:"#{tag.id}"}
+                %span{name:"tag__id",style:"display:none;"}= tag.id
+                %span{name:"tag__x",style:"display:none;"}= tag.x
+                %span{name:"tag__y",style:"display:none;"}= tag.y
+                %span{name:"tag__title"}= tag.title
+                %label.add_button{for:"tag_ids_#{tag.id}"}
         .field#group_tags
-          %div
-            .group-name hoge
-            .tag-name aheaheaheaheaheaheah
-            .del_button
         .actions
           = f.submit 'Create',class: :group_form__submit,id: :group_form__submit
   -else

@@ -123,7 +123,7 @@ body{background:lightgray;}
 
 @media screen and (min-width: 481px){
 
-  #tag_group--label{left:1vw;border-width:0 2vw 3vh 2vw;}
+  #tag_group--label{left:2vw;border-width:0 1vw 3vh 1vw;}
 
   #tag_create{
     .tag_form{
@@ -172,8 +172,7 @@ body{background:lightgray;}
       >#user_session,>#user_registration,>#user_password,>#user_edit,>#group_create{
         form{
           div{width:99vw;
-            label,span,i{font-size:2vh;}
-            a,em{font-size:2vh;}
+            label,span,i,a,em{font-size:2vh!important;}
           }
           .field{margin-bottom:1vh;
             input{width:30vw;padding:0.5vh 5px;font-size:2vh;}
@@ -184,7 +183,7 @@ body{background:lightgray;}
         }
         a{font-size:2vh;}
       }
-      >label,>a{top:50px;left:85vw;line-height:32px;width:15vw;font-size:2vh;}
+      >label,>a{top:50px;left:85vw;line-height:32px;width:15vw;font-size:1.5vh;}
       >a:last-of-type{top:82px;}
     }
   }

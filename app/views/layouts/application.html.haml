@@ -23,12 +23,12 @@
     %input#taggroup_checkbox{type:"checkbox",style:"display:none;"}
     %label#tag_group--label{for:"taggroup_checkbox"}
     #tag_create
-      = form_with url:tags_path,class: :tag_form,method: :post,local:true do |f|
+      = form_with url:tags_path,class: :tag_form,id: :form_tag_create,method: :post,local:true do |f|
         = f.hidden_field :x
         = f.hidden_field :y
         - if user_signed_in?
           = f.text_field :title,placeholder:'marker title',autofocus:true,class: :tag_form__title,autocomplete:"off"
-          = f.submit '作成',class: :tag_form__submit
+          = f.submit '作成',class: :tag_form__submit,id: :submit_tag__create
           .tag_form__group
             - @groups.each_with_index do |group,index|
               - if index==0
