@@ -10,9 +10,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    super
+    Group.create(group_params)
+  end
 
   # GET /resource/edit
   def edit
@@ -63,4 +64,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+
+  private
+  def group_params
+    params[:name]="none"
+    params[:user_id]=User.find_by(email:params.require(:user)[:email]).id
+    params[:user_ids]=Array[params[:user_id]]
+    params.permit(:name,:user_id,user_ids:[])
+  end
 end
