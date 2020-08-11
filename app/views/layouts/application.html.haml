@@ -7,6 +7,8 @@
     %meta{name:"viewport",content:"width=device-width,initial-scale=1.0"}
     = csrf_meta_tags
     = csp_meta_tag
+    :javascript
+      var height=window.innerHeight;document.documentElement.style.setProperty( '--vh', height/100 + 'px');
     = stylesheet_link_tag 'application',media: 'all'
     = javascript_pack_tag 'application',defer:true
     %title あなただけの地図ができる。-MapSpace-
