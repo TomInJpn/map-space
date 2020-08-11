@@ -7,6 +7,18 @@ function outputPos(map_center,x,y)
 
 function markerDisplay(map,markers)
 {
+  let DefaultIcon = L.icon({
+    iconUrl: icon,
+    iconRetinaUrl: iconRetina,
+    shadowUrl: iconShadow,
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    tooltipAnchor: [16, -28],
+    shadowSize: [41, 41]
+  });
+  L.Marker.prototype.options.icon = DefaultIcon;
+
   let marker=[];
   for(let i=0;i<markers.length;i++)
   {
@@ -56,6 +68,10 @@ function markerAddDelete(markers)
 }
 
 
+
+import icon from "../../assets/stylesheets/images/marker-icon.png";
+import iconRetina from "../../assets/stylesheets/images//marker-icon-2x.png";
+import iconShadow from "../../assets/stylesheets/images//marker-shadow.png";
 
 if(navigator.geolocation)
 {
