@@ -1,7 +1,7 @@
 #menu{
   ~.menu{
     >#user_registration,>#user_password,>#user_edit{
-      #error_explanation{position:fixed;top:1vh;}
+      #error_explanation{position:fixed;top:calc( var(--vh) * 1 );}
     }
     >#user_password{
       form{
@@ -11,11 +11,11 @@
       }
     }
     >#user_edit{
-      h2{top:15vh;}
-      h3{top:85vh;
-        +p{width:98vw;top:90vh;text-align:right;}
+      h2{top:calc( var(--vh) * 15 );}
+      h3{top:calc( var(--vh) * 85 );
+        +p{width:98vw;top:calc( var(--vh) * 90 );text-align:right;}
       }
-      form.edit_user{bottom:20vh;
+      form.edit_user{bottom:calc( var(--vh) * 20 );
         .field{
           i{display:block;}
         }
@@ -27,7 +27,7 @@
         }
       }
       form.button_to{
-        input{width:30vw;height:4vh;font-size:3vw;border:0;cursor:pointer;}
+        input{width:30vw;height:calc( var(--vh) * 4 );font-size:3vw;border:0;cursor:pointer;}
       }
     }
   }
