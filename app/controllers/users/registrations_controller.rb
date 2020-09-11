@@ -12,7 +12,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     super
-    Group.create(group_params)
+    # Group.create(group_params)
   end
 
   # GET /resource/edit

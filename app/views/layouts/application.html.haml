@@ -32,11 +32,12 @@
           = f.text_field :title,placeholder:'marker title',autofocus:true,class: :tag_form__title,autocomplete:"off"
           = f.submit '作成',class: :tag_form__submit,id: :submit_tag__create
           .tag_form__group
-            - @groups.each_with_index do |group,index|
-              - if index==0
-                %input{name:"group_ids[]",type:"radio",value:group.id,id:"group_ids_#{group.id}",checked:""}
-              - else
-                %input{name:"group_ids[]",type:"radio",value:group.id,id:"group_ids_#{group.id}"}
-              %label{for:"group_ids_#{group.id}"}= group.name
+            -unless params[:controller]=='users/registrations'
+              - @groups.each_with_index do |group,index|
+                - if index==0
+                  %input{name:"group_ids[]",type:"radio",value:group.id,id:"group_ids_#{group.id}",checked:""}
+                - else
+                  %input{name:"group_ids[]",type:"radio",value:group.id,id:"group_ids_#{group.id}"}
+                %label{for:"group_ids_#{group.id}"}= group.name
           .tag_form__text
             = f.text_area :explanation

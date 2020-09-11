@@ -283,5 +283,5 @@ if(typeof searched_tags!=='undefined')
 if(typeof searched_member!=='undefined')
   {memberObserve();}
 
-setInterval(ajaxAutoSearch,6000);
-// setTimeout(ajaxAutoSearch,6000);
+// setInterval(ajaxAutoSearch,6000);
+setTimeout(ajaxAutoSearch,6000);
