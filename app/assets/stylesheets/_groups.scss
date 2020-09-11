@@ -4,6 +4,7 @@
       >label{top:calc( var(--vh) * 32 );transition:0.3s;}
       >h2{transition:0.3s;}
       form{width:100vw;height:calc( var(--vh) * 56.5 );left:0;
+        div[data-sitekey]{position: absolute;top: calc( var(--vh) * 12);left:0;transition:0.3s;}
         .field{position:absolute;left:0;transition:0.3s;
           label[class$="button"]{width:calc( var(--vh) * 5 );height:calc( var(--vh) * 5 );margin:0 0 0 5vw;border-radius:calc( var(--vh) * 3 );font-size:4vw;text-align:center;cursor:pointer;
             &.add_button{background:cornflowerblue;
@@ -14,14 +15,16 @@
             }
           }
           &:nth-of-type(1){top:0;}
-          &:nth-of-type(2){top:calc( var(--vh) * 9 );}
-          &:nth-of-type(3){top:calc( var(--vh) * 14.5 );}
-          &:nth-of-type(4){top:calc( var(--vh) * 25 );}
-          &:nth-of-type(n+5){left:100vw;}
-          &:nth-of-type(5){top:0;}
-          &:nth-of-type(6){top:calc( var(--vh) * 25 );}
+          &:nth-of-type(2){top:calc( var(--vh) * 6 );}
+          &:nth-of-type(4){top:calc( var(--vh) * 22 );}
+          &:nth-of-type(5){top:calc( var(--vh) * 33 );}
+          &:nth-of-type(n+6){left:100vw;}
+          &:nth-of-type(6){top:0;}
+          &:nth-of-type(7){top:calc( var(--vh) * 28 );}
         }
-        #searched_member,#group_members,#searched_tags,#group_tags{background:rgba(255,255,255,0.2);height:calc( var(--vh) * 20 );margin-left:1vw;border-radius:calc( var(--vh) * 0.5 );overflow:scroll;
+        #group_members{height:calc( var(--vh) * 19 );}
+        #searched_member,#searched_tags,#group_tags{height:calc( var(--vh) * 24 );}
+        #searched_member,#searched_tags,#group_members,#group_tags{background:rgba(255,255,255,0.2);margin-left:1vw;border-radius:calc( var(--vh) * 0.5 );overflow:scroll;
           >div{height:calc( var(--vh) * 10 );width:93vw;padding:calc( var(--vh) * 2.5 ) 0;margin:0 2.5vw;line-height:calc( var(--vh) * 5 );display:flex;justify-content:flex-end;
             >span{font-size:4vw;}
             &:nth-last-of-type(n+2){border-bottom:groove 1px;}
@@ -30,7 +33,7 @@
         }
         #searched_member{height:calc( var(--vh) * 10 );}
         #searched_tags{
-          &::after{content:'';position:fixed;top:calc( var(--vh) * 64 );left:149vw;border-style:solid;border-width:4vw 2vw 0 2vw;border-color:white transparent;opacity:0.7;transition:0.3s;}
+          &::after{content:'';position:fixed;top:calc( var(--vh) * 67.5 );left:149vw;border-style:solid;border-width:4vw 2vw 0 2vw;border-color:white transparent;opacity:0.7;transition:0.3s;}
         }
         .actions{position:absolute;bottom:0;}
       }
@@ -38,9 +41,12 @@
         +label{right:100vw;}
         ~{
           h2{left:-97vw;}
-          form>.field{
-            &:nth-of-type(n+1){left:-100vw;}
-            &:nth-of-type(n+5){left:0;}
+          form{
+            .field{
+              &:nth-of-type(n+1){left:-100vw;}
+              &:nth-of-type(n+6){left:0;}
+            }
+            div[data-sitekey]{left:-100vw;}
           }
         }
       }
@@ -84,17 +90,18 @@
       >#group_create{
         >label{display:none;}
         form{
+          div[data-sitekey]{width: 50vw;left: 49vw;}
           .field{width:48vw;
             div{font-size:2vh;}
             label[class$="button"]{margin-left:3%;font-size:2vh;}
             &:nth-of-type(n+1){left:0;}
-            &:nth-of-type(n+5){left:50vw;}
+            &:nth-of-type(n+6){left:50vw;}
           }
-          #group_members,#searched_tags,#group_tags{height:21vh;margin:0 1vw;
+          #group_members,#searched_tags,#group_tags{margin:0 1vw;
             >div{height:7vh;width:96%;padding:1vh 0;margin:0 2%;}
           }
           #searched_tags{
-            &::after{top:65vh;left:174vw;border-width:1vh 1vw 0 1vw;}
+            &::after{left:174vw;border-width:1vh 1vw 0 1vw;}
           }
         }
         >#turn-tags:checked,>#turn-members:checked{
@@ -104,10 +111,10 @@
             form{
               .field{
                 &:nth-of-type(n+1){left:0;}
-                &:nth-of-type(n+5){left:50vw;}
+                &:nth-of-type(n+6){left:50vw;}
               }
               #searched_tags{
-                &::after{top:65vh;left:174vw;border-width:1vh 1vw 0 1vw;}
+                &::after{left:174vw;border-width:1vh 1vw 0 1vw;}
               }
             }
           }
@@ -120,6 +127,7 @@
     ~.menu{
       >#group_create{
         form{
+          div[data-sitekey]{width: 50vw;left: -51vw;}
           #searched_tags{
             &::after{left:74vw!important;}
           }

@@ -2,6 +2,7 @@
 
 class Users::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
+  prepend_before_action :check_captcha, only: [:create]
 
   # GET /resource/sign_in
   def new
@@ -10,9 +11,9 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   # POST /resource/sign_in
-  # def create
-  #   super
-  # end
+  def create
+    super
+  end
 
   # DELETE /resource/sign_out
   # def destroy
@@ -25,4 +26,12 @@ class Users::SessionsController < Devise::SessionsController
   # def configure_sign_in_params
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   # end
+
+  private
+  def check_captcha
+    unless verify_recaptcha
+      self.resource = resource_class.new sign_in_params
+      respond_with_navigational(resource) { redirect_to new_user_session_path }
+    end
+  end
 end

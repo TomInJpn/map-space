@@ -3,9 +3,9 @@
     >#information{left:0vw;
       span{width:100vw;top:calc( var(--vh) * 40 );font-size:4vw;text-align:center;}
       p{width:90vw;left:5vw;font-size:3.5vw;
-        &:nth-of-type(1){top:calc( var(--vh) * 65 );font-size:5.5vw;}
-        &:nth-of-type(2){top:calc( var(--vh) * 70 );}
-        &:nth-of-type(3){top:calc( var(--vh) * 89 );}
+        &:nth-of-type(2){top:calc( var(--vh) * 65 );font-size:5.5vw;}
+        &:nth-of-type(3){top:calc( var(--vh) * 70 );}
+        &:nth-of-type(4){top:calc( var(--vh) * 89 );}
       }
       ul{top:calc( var(--vh) * 78 );width:80vw;left:10vw;font-size:3.5vw;}
       a{bottom:calc( var(--vh) * 2 );right:5vw;}
@@ -16,7 +16,8 @@
         .field{
           a{display:block;}
         }
-        .field:nth-of-type(4){
+        div[data-sitekey]{position: relative;top: -5vh;}
+        .field:nth-of-type(5){
           input{width:10vw;height:calc( var(--vh) * 2 );}
           label{cursor:pointer;}
         }

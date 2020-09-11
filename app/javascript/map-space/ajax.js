@@ -121,47 +121,52 @@ function ajaxSearch()
 
   if(event.keyCode === 13)
   {
-    let unduplicate=true;
-    existingMembers=Array.from(document.getElementsByClassName('user__data'));
-    if(existingMembers.length!=0){
-      existingMembers.forEach(e=>{if(e.innerText.replace(/\r?\n/g,"")==searchEmail.value){unduplicate=false;}});
-    }
+    let response = grecaptcha.getResponse();
+    if(response.length!=0){
+      let unduplicate=true;
+      existingMembers=Array.from(document.getElementsByClassName('user__data'));
+      if(existingMembers.length!=0){
+        existingMembers.forEach(e=>{if(e.innerText.replace(/\r?\n/g,"")==searchEmail.value){unduplicate=false;}});
+      }
 
-    if(unduplicate)
-    {
-      let token=document.getElementsByName('authenticity_token');
-      let inputData={email:searchEmail.value,authenticity_token:token[0].value};
-      let jsonData=JSON.stringify(inputData);
-      let xhr=new XMLHttpRequest();
-      let res=xhr.responseText;
-      xhr.onload = function(){
-        if (xhr.readyState===4){
-          if (xhr.status===200)
-          {
-            if(xhr.response)
+      if(unduplicate)
+      {
+        let token=document.getElementsByName('authenticity_token');
+        let inputData={email:searchEmail.value,authenticity_token:token[0].value};
+        let jsonData=JSON.stringify(inputData);
+        let xhr=new XMLHttpRequest();
+        let res=xhr.responseText;
+        xhr.onload = function(){
+          if (xhr.readyState===4){
+            if (xhr.status===200)
             {
-              searchEmail.value='';
-              let temp=document.createElement('div');
-              temp.innerHTML=`<div class="user__data">
-              <input id="user_ids_${xhr.response.id}" name="user_ids[]" style="display:none;" type="checkbox" value="${xhr.response.id}">
-              <span name="user__email">${xhr.response.email}</span>
-              <label class="add_button" for="user_ids_${xhr.response.id}"></label>
-              </div>`;
-              searched_member.appendChild(temp.firstElementChild);
+              if(xhr.response)
+              {
+                searchEmail.value='';
+                let temp=document.createElement('div');
+                temp.innerHTML=`<div class="user__data">
+                <input id="user_ids_${xhr.response.id}" name="user_ids[]" style="display:none;" type="checkbox" value="${xhr.response.id}">
+                <span name="user__email">${xhr.response.email}</span>
+                <label class="add_button" for="user_ids_${xhr.response.id}"></label>
+                </div>`;
+                searched_member.appendChild(temp.firstElementChild);
+              }
+              else{searchEmail.value='not matching';}
             }
-            else{searchEmail.value='not matching';}
+            else
+            {alert(`Mail Search Error ${xhr.status}:${xhr.statusText}`);}
           }
-          else
-          {alert(`Mail Search Error ${xhr.status}:${xhr.statusText}`);}
-        }
-      };
-      xhr.onerror=function(){alert(`Mail Search Error ${xhr.status}:${xhr.statusText}`);};
-      xhr.open("POST",'/search.json');
-      xhr.responseType='json';
-      xhr.setRequestHeader('Content-Type', 'application/json');
-      xhr.send(jsonData);
+        };
+        xhr.onerror=function(){alert(`Mail Search Error ${xhr.status}:${xhr.statusText}`);};
+        xhr.open("POST",'/search.json');
+        xhr.responseType='json';
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(jsonData);
+      }
+      else{searchEmail.value="Existing"}
+    }else{
+      searchEmail.value="click reCAPTCHA"
     }
-    else{searchEmail.value="Existing"}
   }
 }
 function ajaxSearchOn()
@@ -283,5 +288,5 @@ if(typeof searched_tags!=='undefined')
 if(typeof searched_member!=='undefined')
   {memberObserve();}
 
-// setInterval(ajaxAutoSearch,6000);
+setInterval(ajaxAutoSearch,6000);
 setTimeout(ajaxAutoSearch,6000);
