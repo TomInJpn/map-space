@@ -1,6 +1,10 @@
 class GroupsController < ApplicationController
   def create
-    Group.create(group_params)
+    @group=Group.create(group_params)
+    respond_to do |format|
+      format.html {redirect_to :root}
+      format.json {render json: @group}
+    end
   end
 
   private

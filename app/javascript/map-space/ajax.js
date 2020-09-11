@@ -1,4 +1,4 @@
-function ajaxForm(e)
+function ajaxTagCreate(e)
 {
   e.preventDefault();
 
@@ -20,21 +20,20 @@ function ajaxForm(e)
   let jsonData=JSON.stringify(inputData);
 
   let xhr=new XMLHttpRequest();
-  let res=xhr.responseText;
   xhr.onload = function(){
     if (xhr.readyState===4){
       if (xhr.status===200)
       {
         if(xhr.response)
         {
-          addHtml(xhr.response);
+          addHtmlTag(xhr.response);
           submit_tag__create.disabled=false;
           title.value='';
           explanation.value='';
         }
       }
       else
-      {alert(`Tag Create Error ${xhr.status}:${xhr.statusText}`);}
+      {alert(`Tag Create Error ${xhr.status}:${xhr.statusText}`);submit_tag__create.disabled=false;}
     }
   };
   xhr.onerror=function(){alert(`Tag Create Error ${xhr.status}:${xhr.statusText}`);};
@@ -46,7 +45,7 @@ function ajaxForm(e)
 
 
 
-function addHtml(res)
+function addHtmlTag(res)
 {
   if(res.title)
   {
@@ -62,6 +61,66 @@ function addHtml(res)
     temp.innerHTML=stg;
     searched_tags.appendChild(temp.firstElementChild);
   }
+}
+
+
+
+function ajaxGroupCreate(e)
+{
+  e.preventDefault();
+
+  let method=this.getAttribute("method");
+  let url=this.getAttribute("action");
+  let formData=new FormData(this);
+  let inputData={};
+
+  formData.forEach(function(value,key)
+  {
+    if(key.endsWith("_ids[]"))
+    {
+      inputData[key.replace('[]','')]=[value];
+    }
+    else
+    {inputData[key]=value;}
+  });
+
+  let jsonData=JSON.stringify(inputData);
+
+  let xhr=new XMLHttpRequest();
+  xhr.onload = function(){
+    if (xhr.readyState===4){
+      if (xhr.status===200)
+      {
+        if(xhr.response)
+        {
+          addHtmlGroup(xhr.response);
+          group_form__submit.disabled=false;
+          name.value='';
+          searchEmail.value='';
+        }
+      }
+      else
+      {alert(`Group Create Error ${xhr.status}:${xhr.statusText}`);group_form__submit.disabled=false;}
+    }
+  };
+  xhr.onerror=function(){alert(`Group Create Error ${xhr.status}:${xhr.statusText}`);};
+  xhr.open(method,`${url}.json`);
+  xhr.responseType='json';
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(jsonData);
+}
+
+
+
+function addHtmlGroup(res)
+{
+  let stg=`<input id="group_ids_${res.id}" name="group_ids[]" type="radio" value="${res.id}">
+  <label for="group_ids_${res.id}">${res.name}</label>`;
+  let temp=document.createElement('div');
+  temp.innerHTML=stg;
+  temp.childNodes.forEach(function(item){
+    tag_form__group.appendChild(item);
+  });
 }
 
 
@@ -118,7 +177,6 @@ function tagObserve()
 
 function ajaxSearch()
 {
-
   if(event.keyCode === 13)
   {
     let response = grecaptcha.getResponse();
@@ -269,7 +327,9 @@ function ajaxAutoSearch()
 
 
 
-form_tag_create.addEventListener('submit',ajaxForm);
+form_tag_create.addEventListener('submit',ajaxTagCreate);
+
+create_group.addEventListener('submit',ajaxGroupCreate);
 
 if(typeof searchEmail!=='undefined')
 {

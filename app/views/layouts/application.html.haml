@@ -31,7 +31,7 @@
         - if user_signed_in?
           = f.text_field :title,placeholder:'marker title',autofocus:true,class: :tag_form__title,autocomplete:"off"
           = f.submit '作成',class: :tag_form__submit,id: :submit_tag__create
-          .tag_form__group
+          #tag_form__group.tag_form__group
             -unless params[:controller]=='users/registrations'
               - @groups.each_with_index do |group,index|
                 - if index==0
