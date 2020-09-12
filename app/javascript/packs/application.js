@@ -10,6 +10,7 @@ require("channels")
 require("map-space/leaflet.js")
 require("map-space/map.js")
 require("map-space/ajax.js")
+require("map-space/groupSelect.js")
 
 
 // Uncomment to copy all static images under ../images to the output folder and reference
