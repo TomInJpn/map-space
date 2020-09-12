@@ -35,9 +35,9 @@
             -unless params[:controller]=='users/registrations'
               - @groups.each_with_index do |group,index|
                 - if index==0
-                  %input{name:"group_ids[]",type:"radio",value:group.id,id:"group_ids_#{group.id}",checked:""}
+                  %input{name:"group_ids[]",type:"checkbox",value:group.id,id:"group_ids_#{group.id}",checked:""}
                 - else
-                  %input{name:"group_ids[]",type:"radio",value:group.id,id:"group_ids_#{group.id}"}
+                  %input{name:"group_ids[]",type:"checkbox",value:group.id,id:"group_ids_#{group.id}"}
                 %label{for:"group_ids_#{group.id}"}= group.name
           .tag_form__text
             = f.text_area :explanation

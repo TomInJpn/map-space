@@ -6,15 +6,19 @@ function ajaxTagCreate(e)
   let url=this.getAttribute("action");
   let formData=new FormData(this);
   let inputData={};
+  let valueArry=[]
 
   formData.forEach(function(value,key)
   {
     if(key.endsWith("_ids[]"))
     {
-      inputData[key.replace('[]','')]=[value];
+      valueArry.push(value);
+      inputData[key.replace('[]','')]=valueArry;
     }
     else
-    {inputData[key]=value;}
+    {
+      inputData[key]=value;
+    }
   });
 
   let jsonData=JSON.stringify(inputData);
@@ -33,7 +37,9 @@ function ajaxTagCreate(e)
         }
       }
       else
-      {alert(`Tag Create Error ${xhr.status}:${xhr.statusText}`);submit_tag__create.disabled=false;}
+      {
+        alert(`Tag Create Error ${xhr.status}:${xhr.statusText}`);submit_tag__create.disabled=false;
+      }
     }
   };
   xhr.onerror=function(){alert(`Tag Create Error ${xhr.status}:${xhr.statusText}`);};
@@ -81,7 +87,9 @@ function ajaxGroupCreate(e)
       inputData[key.replace('[]','')]=[value];
     }
     else
-    {inputData[key]=value;}
+    {
+      inputData[key]=value;
+    }
   });
 
   let jsonData=JSON.stringify(inputData);
@@ -100,7 +108,9 @@ function ajaxGroupCreate(e)
         }
       }
       else
-      {alert(`Group Create Error ${xhr.status}:${xhr.statusText}`);group_form__submit.disabled=false;}
+      {
+        alert(`Group Create Error ${xhr.status}:${xhr.statusText}`);group_form__submit.disabled=false;
+      }
     }
   };
   xhr.onerror=function(){alert(`Group Create Error ${xhr.status}:${xhr.statusText}`);};
@@ -114,7 +124,7 @@ function ajaxGroupCreate(e)
 
 function addHtmlGroup(res)
 {
-  let stg=`<input id="group_ids_${res.id}" name="group_ids[]" type="radio" value="${res.id}">
+  let stg=`<input id="group_ids_${res.id}" name="group_ids[]" type="checkbox" value="${res.id}">
   <label for="group_ids_${res.id}">${res.name}</label>`;
   let temp=document.createElement('div');
   temp.innerHTML=stg;
