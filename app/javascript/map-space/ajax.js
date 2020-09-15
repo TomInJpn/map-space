@@ -24,8 +24,10 @@ function ajaxTagCreate(e)
   let jsonData=JSON.stringify(inputData);
 
   let xhr=new XMLHttpRequest();
-  xhr.onload = function(){
-    if (xhr.readyState===4){
+  xhr.onload = function()
+  {
+    if (xhr.readyState===4)
+    {
       if (xhr.status===200)
       {
         if(xhr.response)
@@ -38,14 +40,18 @@ function ajaxTagCreate(e)
       }
       else
       {
-        alert(`Tag Create Error ${xhr.status}:${xhr.statusText}`);submit_tag__create.disabled=false;
+        alert(`Tag Create Error ${xhr.status}:${xhr.statusText}`);
+        submit_tag__create.disabled=false;
       }
     }
   };
-  xhr.onerror=function(){alert(`Tag Create Error ${xhr.status}:${xhr.statusText}`);};
+  xhr.onerror=function()
+  {
+    alert(`Tag Create Error ${xhr.status}:${xhr.statusText}`);
+  };
   xhr.open(method,`${url}.json`);
   xhr.responseType='json';
-  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.setRequestHeader('Content-Type','application/json');
   xhr.send(jsonData);
 }
 
@@ -95,7 +101,8 @@ function ajaxGroupCreate(e)
   let jsonData=JSON.stringify(inputData);
 
   let xhr=new XMLHttpRequest();
-  xhr.onload = function(){
+  xhr.onload = function()
+  {
     if (xhr.readyState===4){
       if (xhr.status===200)
       {
@@ -113,10 +120,13 @@ function ajaxGroupCreate(e)
       }
     }
   };
-  xhr.onerror=function(){alert(`Group Create Error ${xhr.status}:${xhr.statusText}`);};
+  xhr.onerror=function()
+  {
+    alert(`Group Create Error ${xhr.status}:${xhr.statusText}`);
+  };
   xhr.open(method,`${url}.json`);
   xhr.responseType='json';
-  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.setRequestHeader('Content-Type','application/json');
   xhr.send(jsonData);
 }
 
@@ -167,45 +177,68 @@ function tagObserve()
 {
   let target=document.getElementById('searched_tags');
   let originMarkersL=document.getElementsByClassName('tag__data').length;
-  let observer = new MutationObserver(function(records){
+  let observer = new MutationObserver(function(records)
+  {
     let markersL=document.getElementsByClassName('tag__data').length;
     if(markersL>originMarkersL)
     {
       for(let i=0;i<records.length;i++)
       {
         records[i].addedNodes[0].lastElementChild.addEventListener('click',ajaxAddTag);
-        originMarkersL=document.getElementsByClassName('tag__data').length
+        originMarkersL=document.getElementsByClassName('tag__data').length;
       }
     }
   })
-  observer.observe(target,{
+  observer.observe
+  (target,{
     childList:true
   })
 }
 
 
 
-function ajaxSearch()
+function GroupNameIn()
+{
+  group_form__submit.disabled=true
+}
+function GroupNameOut()
+{
+  group_form__submit.disabled=false
+}
+
+
+function ajaxSearch(event)
 {
   if(event.keyCode === 13)
   {
     let response = grecaptcha.getResponse();
-    if(response.length!=0){
+    if(response.length!=0)
+    {
       let unduplicate=true;
       existingMembers=Array.from(document.getElementsByClassName('user__data'));
-      if(existingMembers.length!=0){
-        existingMembers.forEach(e=>{if(e.innerText.replace(/\r?\n/g,"")==searchEmail.value){unduplicate=false;}});
+      if(existingMembers.length!=0)
+      {
+        existingMembers.forEach
+        (e=>{
+          if(e.innerText.replace(/\r?\n/g,"")==searchEmail.value)
+          {
+            unduplicate=false;
+          }
+        });
       }
 
       if(unduplicate)
       {
+        group_form__submit.disabled=true
         let token=document.getElementsByName('authenticity_token');
         let inputData={email:searchEmail.value,authenticity_token:token[0].value};
         let jsonData=JSON.stringify(inputData);
         let xhr=new XMLHttpRequest();
         let res=xhr.responseText;
-        xhr.onload = function(){
-          if (xhr.readyState===4){
+        xhr.onload = function()
+        {
+          if (xhr.readyState===4)
+          {
             if (xhr.status===200)
             {
               if(xhr.response)
@@ -218,33 +251,36 @@ function ajaxSearch()
                 <label class="add_button" for="user_ids_${xhr.response.id}"></label>
                 </div>`;
                 searched_member.appendChild(temp.firstElementChild);
+                group_form__submit.disabled=false
               }
-              else{searchEmail.value='not matching';}
+              else
+              {
+                searchEmail.value='not matching';
+                group_form__submit.disabled=false
+              }
             }
             else
-            {alert(`Mail Search Error ${xhr.status}:${xhr.statusText}`);}
+            {
+              alert(`Mail Search Error ${xhr.status}:${xhr.statusText}`);
+            }
           }
         };
-        xhr.onerror=function(){alert(`Mail Search Error ${xhr.status}:${xhr.statusText}`);};
+        xhr.onerror=function()
+        {
+          alert(`Mail Search Error ${xhr.status}:${xhr.statusText}`);
+        };
         xhr.open("POST",'/search.json');
         xhr.responseType='json';
-        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.setRequestHeader('Content-Type','application/json');
         xhr.send(jsonData);
       }
-      else{searchEmail.value="Existing"}
+      else{
+        searchEmail.value="Existing"
+      }
     }else{
       searchEmail.value="click reCAPTCHA"
     }
   }
-}
-function ajaxSearchOn()
-{
-  create_group.setAttribute("onsubmit","return false");
-}
-function ajaxSearchOff()
-{
-  create_group.setAttribute("onsubmit","return true");
-  group_form__submit.disabled=false;
 }
 
 
@@ -280,57 +316,73 @@ function ajaxDelGroup(e)
 function memberObserve()
 {
   let target=document.getElementById('searched_member');
-  let observer = new MutationObserver(function(records){
+  let observer = new MutationObserver
+  (function(records){
     if(records[0].addedNodes.length!=0)
     {
       records[0].addedNodes[0].lastElementChild.addEventListener('click',ajaxAddGroup);
       let searchMembers=searched_member.getElementsByClassName('user__data');
       let end=searchMembers[0].clientHeight*searchMembers.length;
-      searched_member.scrollTo({top:end,behavior:'smooth'});
+      searched_member.scrollTo
+      ({
+        top:end,behavior:'smooth'
+      });
     }
   })
-  observer.observe(target,{
+  observer.observe
+  (target,{
     childList:true
   })
 }
 
 
 
-function ajaxAutoSearch()
+function ajaxAutoReload()
 {
   let existingTags=document.getElementsByClassName("tag__data");
+  let tag_id=0
   if(existingTags.length>0)
   {
-    let tag_id=Number(existingTags[0].firstChild.nextSibling.value);
+    tag_id=Number(existingTags[0].firstChild.nextSibling.value);
     for(let i=0;i<existingTags.length;i++)
     {
-      if(tag_id<Number(existingTags[i].firstChild.nextSibling.value)){tag_id=Number(existingTags[i].firstChild.nextSibling.value);}
-    }
-    let token=document.getElementsByName('authenticity_token');
-    let inputData={id:tag_id,authenticity_token:token[0].value};
-    let jsonData=JSON.stringify(inputData);
-
-    let xhr=new XMLHttpRequest();
-    xhr.onload = function(){
-      if (xhr.readyState===4){
-        if (xhr.status===200)
-        {
-          if(xhr.response)
-          {
-            for(let i=0;i<xhr.response.length;i++)
-            {addHtml(xhr.response[i]);}
-          }
-        }
-        else
-        {alert(`Reload Error ${xhr.status}:${xhr.statusText}`);}
+      if(tag_id<Number(existingTags[i].firstChild.nextSibling.value))
+      {
+        tag_id=Number(existingTags[i].firstChild.nextSibling.value);
       }
-    };
-    xhr.onerror=function(){alert(`Reload Error ${xhr.status}:${xhr.statusText}`);};
-    xhr.open('POST','/auto/search.json');
-    xhr.responseType='json';
-    xhr.setRequestHeader('Content-Type','application/json');
-    xhr.send(jsonData);
+    }
   }
+  let token=document.getElementsByName('authenticity_token');
+  let inputData={id:tag_id,authenticity_token:token[0].value};
+  let jsonData=JSON.stringify(inputData);
+
+  let xhr=new XMLHttpRequest();
+  xhr.onload = function()
+  {
+    if (xhr.readyState===4)
+    {
+      if (xhr.status===200)
+      {
+        if(xhr.response)
+        {
+          for(let i=0;i<xhr.response.length;i++)
+          {addHtmlTag(xhr.response[i]);}
+        }
+      }
+      else
+      {
+        alert(`Reload Error ${xhr.status}:${xhr.statusText}`);
+      }
+    }
+  };
+  xhr.onerror=function()
+  {
+    alert(`Reload Error ${xhr.status}:${xhr.statusText}`);
+  };
+  xhr.open('POST','/auto/search.json');
+  xhr.responseType='json';
+  xhr.setRequestHeader('Content-Type','application/json');
+  xhr.send(jsonData);
 }
 
 
@@ -339,13 +391,19 @@ function ajaxAutoSearch()
 
 form_tag_create.addEventListener('submit',ajaxTagCreate);
 
-create_group.addEventListener('submit',ajaxGroupCreate);
+if(typeof create_group!=='undefined')
+{
+  create_group.addEventListener('submit',ajaxGroupCreate);
+  GroupName.addEventListener('focus',GroupNameIn);
+  GroupName.addEventListener('blur',GroupNameOut);
+
+  setInterval(ajaxAutoReload,6000);
+  // setTimeout(ajaxAutoReload,6000);
+}
 
 if(typeof searchEmail!=='undefined')
 {
   searchEmail.addEventListener('keydown',ajaxSearch);
-  searchEmail.addEventListener('focus',ajaxSearchOn);
-  searchEmail.addEventListener('blur',ajaxSearchOff);
 }
 
 if(typeof searched_tags!=='undefined')
@@ -356,7 +414,6 @@ if(typeof searched_tags!=='undefined')
 }
 
 if(typeof searched_member!=='undefined')
-  {memberObserve();}
-
-setInterval(ajaxAutoSearch,6000);
-setTimeout(ajaxAutoSearch,6000);
+{
+  memberObserve();
+}

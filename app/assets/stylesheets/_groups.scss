@@ -97,7 +97,7 @@
             &:nth-of-type(n+1){left:0;}
             &:nth-of-type(n+6){left:50vw;}
           }
-          #group_members,#searched_tags,#group_tags{margin:0 1vw;
+          #searched_member,#searched_tags,#group_members,#group_tags{margin:0 1vw;
             >div{height:7vh;width:96%;padding:1vh 0;margin:0 2%;}
           }
           #searched_tags{

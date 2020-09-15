@@ -24,7 +24,7 @@
       =form_with url:groups_path,id: :create_group,class: :create_group,method: :post,local:true do |f|
         .field
           %label Group name
-          = f.text_field :name,placeholder:"Group name",class: :group_form_name,autocomplete:"off"
+          = f.text_field :name,placeholder:"Group name",class: :group_form_name,autocomplete:"off",id:"GroupName"
         .field
           %label search Email
           %input{id:"searchEmail",name:"email",type:"email",placeholder:"e@mail",value:""}

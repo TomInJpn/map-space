@@ -14,7 +14,7 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   # GET /resource/confirmation?confirmation_token=abcdef
   def show
     super
-    Group.create(group_params)
+    Group.create(group_params) if Group.where(group_params[:user_id].to_s)
   end
 
   # protected
