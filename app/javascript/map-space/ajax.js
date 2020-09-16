@@ -103,15 +103,27 @@ function ajaxGroupCreate(e)
   let xhr=new XMLHttpRequest();
   xhr.onload = function()
   {
-    if (xhr.readyState===4){
+    if (xhr.readyState===4)
+    {
       if (xhr.status===200)
       {
         if(xhr.response)
         {
           addHtmlGroup(xhr.response);
           group_form__submit.disabled=false;
-          name.value='';
+          GroupName.value='';
           searchEmail.value='';
+          searched_member.textContent = null;
+          let groupMembers=document.querySelectorAll('#group_members>.user__data:nth-of-type(2)');
+          for(let i=0;i<groupMembers.length;i++)
+          {
+            groupMembers[i].outerHTML='';
+          }
+          let groupTags=document.querySelectorAll('#group_tags .del_button')
+          for(let i=0;i<groupTags.length;i++)
+          {
+            groupTags[i].click();
+          }
         }
       }
       else
