@@ -3,7 +3,7 @@ class CreateGroups < ActiveRecord::Migration[6.0]
     create_table :groups do |t|
       t.string :name,null:false
       t.index :name
-      t.integer :user_id,null:false
+      t.references :user,null:false
 
       t.timestamps
     end

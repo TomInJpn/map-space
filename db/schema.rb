@@ -35,10 +35,11 @@ ActiveRecord::Schema.define(version: 2020_07_30_024123) do
 
   create_table "groups", force: :cascade do |t|
     t.string "name", null: false
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_groups_on_name"
+    t.index ["user_id"], name: "index_groups_on_user_id"
   end
 
   create_table "tags", force: :cascade do |t|

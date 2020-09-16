@@ -6,7 +6,7 @@ function ajaxTagCreate(e)
   let url=this.getAttribute("action");
   let formData=new FormData(this);
   let inputData={};
-  let valueArry=[]
+  let valueArry=[];
 
   formData.forEach(function(value,key)
   {
@@ -85,12 +85,20 @@ function ajaxGroupCreate(e)
   let url=this.getAttribute("action");
   let formData=new FormData(this);
   let inputData={};
+  let usersValueArry=[];
+  let tagsValueArry=[];
 
   formData.forEach(function(value,key)
   {
-    if(key.endsWith("_ids[]"))
+    if(key=="user_ids[]")
     {
-      inputData[key.replace('[]','')]=[value];
+      usersValueArry.push(value);
+      inputData[key.replace('[]','')]=usersValueArry;
+    }
+    else if(key=="tag_ids[]")
+    {
+      tagsValueArry.push(value);
+      inputData[key.replace('[]','')]=tagsValueArry;
     }
     else
     {
@@ -409,7 +417,7 @@ if(typeof create_group!=='undefined')
   GroupName.addEventListener('focus',GroupNameIn);
   GroupName.addEventListener('blur',GroupNameOut);
 
-  setInterval(ajaxAutoReload,6000);
+  // setInterval(ajaxAutoReload,6000);
   // setTimeout(ajaxAutoReload,6000);
 }
 
