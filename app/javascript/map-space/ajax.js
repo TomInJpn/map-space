@@ -33,6 +33,7 @@ function ajaxTagCreate(e)
         if(xhr.response)
         {
           addHtmlTag(xhr.response);
+          addHtmlUsersTag(xhr.response);
           submit_tag__create.disabled=false;
           title.value='';
           explanation.value='';
@@ -61,7 +62,25 @@ function addHtmlTag(res)
 {
   if(res.title)
   {
-    let stg=`<div class="tag__data">
+    let stg=`<div class="tag__data" style="display:none;">
+    <span name="tag__id">${res.id}</span>
+    <span name="tag__x">${res.x}</span>
+    <span name="tag__y">${res.y}</span>
+    <span name="tag__title">${res.title}</span>
+    </div>`;
+    let temp=document.createElement('div');
+    temp.innerHTML=stg;
+    group_create.appendChild(temp.firstElementChild);
+  }
+}
+
+
+
+function addHtmlUsersTag(res)
+{
+  if(res.title)
+  {
+    let stg=`<div class="currentUser_tag__data">
     <input id="tag_ids_${res.id}" name="tag_ids[]" style="display:none;" type="checkbox" value="${res.id}">
     <span name="tag__id" style="display:none;">${res.id}</span>
     <span name="tag__x" style="display:none;">${res.x}</span>
@@ -172,7 +191,7 @@ function ajaxAddTag(e)
   group_tags.appendChild(this.parentNode);
   e.target.removeEventListener('click',ajaxAddTag);
   e.target.addEventListener('click',ajaxDelTag);
-  let groupTags=group_tags.getElementsByClassName('tag__data');
+  let groupTags=group_tags.getElementsByClassName('currentUser_tag__data');
   let end=groupTags[0].clientHeight*groupTags.length;
   group_tags.scrollTo({top:end,behavior:'smooth'});
 }
@@ -186,7 +205,7 @@ function ajaxDelTag(e)
   searched_tags.appendChild(this.parentNode);
   e.target.removeEventListener('click',ajaxDelTag);
   e.target.addEventListener('click',ajaxAddTag);
-  let searchTags=searched_tags.getElementsByClassName('tag__data');
+  let searchTags=searched_tags.getElementsByClassName('currentUser_tag__data');
   let end=searchTags[0].clientHeight*searchTags.length;
   searched_tags.scrollTo({top:end,behavior:'smooth'});
 }
@@ -196,16 +215,16 @@ function ajaxDelTag(e)
 function tagObserve()
 {
   let target=document.getElementById('searched_tags');
-  let originMarkersL=document.getElementsByClassName('tag__data').length;
+  let originMarkersL=document.getElementsByClassName('currentUser_tag__data').length;
   let observer = new MutationObserver(function(records)
   {
-    let markersL=document.getElementsByClassName('tag__data').length;
+    let markersL=document.getElementsByClassName('currentUser_tag__data').length;
     if(markersL>originMarkersL)
     {
       for(let i=0;i<records.length;i++)
       {
         records[i].addedNodes[0].lastElementChild.addEventListener('click',ajaxAddTag);
-        originMarkersL=document.getElementsByClassName('tag__data').length;
+        originMarkersL=document.getElementsByClassName('currentUser_tag__data').length;
       }
     }
   })
@@ -363,12 +382,12 @@ function ajaxAutoReload()
   let tag_id=0
   if(existingTags.length>0)
   {
-    tag_id=Number(existingTags[0].firstChild.nextSibling.value);
+    tag_id=Number(existingTags[0].firstChild.nextSibling.innerText);
     for(let i=0;i<existingTags.length;i++)
     {
-      if(tag_id<Number(existingTags[i].firstChild.nextSibling.value))
+      if(tag_id<Number(existingTags[i].firstChild.nextSibling.innerText))
       {
-        tag_id=Number(existingTags[i].firstChild.nextSibling.value);
+        tag_id=Number(existingTags[i].firstChild.nextSibling.innerText);
       }
     }
   }
@@ -386,7 +405,9 @@ function ajaxAutoReload()
         if(xhr.response)
         {
           for(let i=0;i<xhr.response.length;i++)
-          {addHtmlTag(xhr.response[i]);}
+          {
+            addHtmlTag(xhr.response[i]);
+          }
         }
       }
       else
@@ -417,8 +438,8 @@ if(typeof create_group!=='undefined')
   GroupName.addEventListener('focus',GroupNameIn);
   GroupName.addEventListener('blur',GroupNameOut);
 
-  // setInterval(ajaxAutoReload,6000);
-  // setTimeout(ajaxAutoReload,6000);
+  setInterval(ajaxAutoReload,60000);
+  // setTimeout(ajaxAutoReload,60000);
 }
 
 if(typeof searchEmail!=='undefined')
@@ -429,7 +450,7 @@ if(typeof searchEmail!=='undefined')
 if(typeof searched_tags!=='undefined')
 {
   tagObserve();
-  tagDatas=searched_tags.querySelectorAll('.tag__data');
+  tagDatas=searched_tags.querySelectorAll('.currentUser_tag__data');
   for(let i=0;i<tagDatas.length;i++){tagDatas[i].lastElementChild.addEventListener('click',ajaxAddTag)}
 }
 

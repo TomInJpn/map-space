@@ -35,18 +35,26 @@
             %input{name:"user_ids[]",value:"#{current_user.id}",type:"checkbox",checked:"checked"}
             %span{name:"user__email"}= "#{current_user.email}"
         .field#searched_tags
-          -if user_signed_in? && @tags
+          -if @tags
             - @tags.each do |tag|
-              .tag__data
-                %input{id:"tag_ids_#{tag.id}",name:"tag_ids[]",style:"display:none;",type:"checkbox",value:"#{tag.id}"}
-                %span{name:"tag__id",style:"display:none;"}= tag.id
-                %span{name:"tag__x",style:"display:none;"}= tag.x
-                %span{name:"tag__y",style:"display:none;"}= tag.y
-                %span{name:"tag__title"}= tag.title
-                %label.add_button{for:"tag_ids_#{tag.id}"}
+              - if tag.user_id==current_user.id
+                .currentUser_tag__data
+                  %input{id:"tag_ids_#{tag.id}",name:"tag_ids[]",style:"display:none;",type:"checkbox",value:"#{tag.id}"}
+                  %span{name:"tag__id",style:"display:none;"}= tag.id
+                  %span{name:"tag__x",style:"display:none;"}= tag.x
+                  %span{name:"tag__y",style:"display:none;"}= tag.y
+                  %span{name:"tag__title"}= tag.title
+                  %label.add_button{for:"tag_ids_#{tag.id}"}
         .field#group_tags
         .actions
           = f.submit 'Create',class: :group_form__submit,id: :group_form__submit
+      -if @tags
+        - @tags.each do |tag|
+          .tag__data{style:"display:none;"}
+            %span{name:"tag__id"}= tag.id
+            %span{name:"tag__x"}= tag.x
+            %span{name:"tag__y"}= tag.y
+            %span{name:"tag__title"}= tag.title
   -else
     %input#info{name:"menu_page",type:"radio",style:"display:none;"}
     -unless flash[:error].nil?

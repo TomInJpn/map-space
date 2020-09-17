@@ -30,7 +30,7 @@ function markerDisplay(map,markers)
 }
 
 function markerObserve(map){
-  let target=document.getElementById('searched_tags');
+  let target=document.getElementById('group_create');
   let originMarkersL=document.getElementsByClassName('tag__data').length;
   let observer = new MutationObserver(function(records){
     let markersL=document.getElementsByClassName('tag__data').length;
