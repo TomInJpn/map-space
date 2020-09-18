@@ -201,6 +201,26 @@
             }
           }
         }
+        #group__datas{
+          width:200px;
+          left:-200px;
+          >*+*{
+            font-size:14px;
+          }
+          .group__data{
+            &:hover ul{
+              left:200px;
+              li{
+                width:200px;
+                font-size:14px;
+              }
+            }
+          }
+          .group__data:first-of-type::before{
+            width:200px;
+            font-size:14px;
+          }
+        }
       }
     }
   }
