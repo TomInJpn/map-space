@@ -21,7 +21,7 @@ function ajaxTagCreate(e)
     }
   });
 
-  let jsonData=JSON.stringify(inputData);
+  let jsonData=JSON.stringify(inputData);console.log(jsonData);
 
   let xhr=new XMLHttpRequest();
   xhr.onload = function()
@@ -70,7 +70,7 @@ function addHtmlTag(res)
     </div>`;
     let temp=document.createElement('div');
     temp.innerHTML=stg;
-    group_create.appendChild(temp.firstElementChild);
+    tag__datas.appendChild(temp.firstElementChild);
   }
 }
 
@@ -244,6 +244,7 @@ function GroupNameOut()
 {
   group_form__submit.disabled=false
 }
+
 
 
 function ajaxSearch(event)
@@ -437,9 +438,12 @@ if(typeof create_group!=='undefined')
   create_group.addEventListener('submit',ajaxGroupCreate);
   GroupName.addEventListener('focus',GroupNameIn);
   GroupName.addEventListener('blur',GroupNameOut);
+}
 
-  setInterval(ajaxAutoReload,60000);
-  // setTimeout(ajaxAutoReload,60000);
+if(typeof tag__datas!=='undefined')
+{
+  setInterval(ajaxAutoReload,6000);
+  // setTimeout(ajaxAutoReload,6000);
 }
 
 if(typeof searchEmail!=='undefined')

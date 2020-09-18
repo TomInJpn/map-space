@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :search,only: :create
   resources :tags,only: [:create,:destroy,:show,:edit,:update]
   resources :groups,only: [:create,:show,:edit,:update,:destroy]
+  resources :searchtags,only: [:create]
   namespace :auto do
     resources :search,only: :create
   end

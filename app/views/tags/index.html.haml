@@ -11,7 +11,6 @@
     %span#menu-label__line
 -else
   %input#menu{type:"checkbox",style:"display:none;",checked:"checked"}
-
 .menu
   -if user_signed_in?
     =link_to "Group edit",""
@@ -48,13 +47,22 @@
         .field#group_tags
         .actions
           = f.submit 'Create',class: :group_form__submit,id: :group_form__submit
-      -if @tags
-        - @tags.each do |tag|
-          .tag__data{style:"display:none;"}
-            %span{name:"tag__id"}= tag.id
-            %span{name:"tag__x"}= tag.x
-            %span{name:"tag__y"}= tag.y
-            %span{name:"tag__title"}= tag.title
+      %ul#group__datas
+        -if @groups
+          - @groups.each do |group|
+            %li.group__data
+              %span{name:"group__id",style:"display:none;"}= group.id
+              .group__name= group.name
+      #group__menu
+      #tag__datas{style:"display:none;"}
+        -if @tags
+          - @tags.each do |tag|
+            .tag__data
+              %span{name:"tag__id"}= tag.id
+              %span{name:"tag__title"}= tag.title
+              %span{name:"tag__explanation"}= tag.explanation
+              %span{name:"tag__x"}= tag.x
+              %span{name:"tag__y"}= tag.y
   -else
     %input#info{name:"menu_page",type:"radio",style:"display:none;"}
     -unless flash[:error].nil?
