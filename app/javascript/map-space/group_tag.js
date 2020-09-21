@@ -3,8 +3,11 @@ let authenticityToken=document.querySelector("input[name='authenticity_token']")
 
 for(let groupData of groupDatas)
 {
-  groupData.addEventListener('mouseover',()=>{
-    ajaxGroupMenu(authenticityToken.value,groupData.firstChild.nextSibling.innerText,groupData);
+  groupData.addEventListener('mouseenter',()=>{
+    ajaxGroupMenu(authenticityToken.value, groupData.firstChild.nextSibling.innerText, groupData);
+  });
+  groupData.addEventListener('mouseleave',(e)=>{
+    e.currentTarget.getElementsByTagName('ul')[0].outerHTML='';
   });
 }
 
@@ -33,7 +36,7 @@ function tagsInGroup(tags,groupData)
   groupData.appendChild(temp.firstElementChild);
 }
 
-function ajaxGroupMenu(autCityToken,groupID,groupData)
+function ajaxGroupMenu(autCityToken, groupID, groupData)
 {
   let group_data={'authenticity_token':autCityToken,'group_id':groupID}
   let jsonData=JSON.stringify(group_data);
@@ -66,4 +69,24 @@ function ajaxGroupMenu(autCityToken,groupID,groupData)
   {
     xhr.send(jsonData);
   }
+}
+
+function gropuMenuObserve()
+{
+  let target=document.getElementById('group__datas');
+  let observer = new MutationObserver
+  (function(records){
+    records[0].addedNodes[0].addEventListener('mouseover',()=>{
+      ajaxGroupMenu(authenticityToken.value, records[0].addedNodes[0].firstChild.nextSibling.innerText, records[0].addedNodes[0]);
+    });
+  })
+  observer.observe
+  (target,{
+    childList:true
+  })
+}
+
+if(typeof group__datas!=='undefined')
+{
+  gropuMenuObserve();
 }

@@ -137,6 +137,7 @@ function ajaxGroupCreate(e)
         if(xhr.response)
         {
           addHtmlGroup(xhr.response);
+          addGroupdatInGroupdatas(xhr.response);
           group_form__submit.disabled=false;
           GroupName.value='';
           searchEmail.value='';
@@ -180,6 +181,19 @@ function addHtmlGroup(res)
   temp.childNodes.forEach(function(item){
     tag_form__group.appendChild(item);
   });
+}
+
+
+
+function addGroupdatInGroupdatas(res)
+{
+  let stg=`<li class="group__data">
+  <span name="group__id" style="display:none;">${res.id}</span>
+  <div class="group__name">${res.name}</div>
+  </li>`;
+  let temp=document.createElement('div');
+  temp.innerHTML=stg;
+  group__datas.appendChild(temp.firstElementChild);
 }
 
 
@@ -266,7 +280,6 @@ function ajaxSearch(event)
           }
         });
       }
-
       if(unduplicate)
       {
         group_form__submit.disabled=true
@@ -442,8 +455,8 @@ if(typeof create_group!=='undefined')
 
 if(typeof tag__datas!=='undefined')
 {
-  setInterval(ajaxAutoReload,6000);
-  // setTimeout(ajaxAutoReload,6000);
+  setInterval(ajaxAutoReload,60000);
+  // setTimeout(ajaxAutoReload,60000);
 }
 
 if(typeof searchEmail!=='undefined')

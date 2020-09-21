@@ -1,3 +1,30 @@
+function tagAddClickListener(map)
+{
+  let tagsInGroup=document.querySelectorAll('#group__datas [name="tag__title"]');
+  for(let tag of tagsInGroup)
+  {
+    tag.addEventListener('click',(e)=>{
+      let locateX=e.currentTarget.querySelector('[name="tag__x"]').innerHTML;
+      let locateY=e.currentTarget.querySelector('[name="tag__y"]').innerHTML;
+      let latlng=[locateY,locateX];
+      map.panTo(latlng,{animate:true});
+    });
+  }
+}
+
+function tagInGropuObserve(map)
+{
+  let target=document.getElementById('group__datas');
+  let observer = new MutationObserver
+  (function(){
+    tagAddClickListener(map);
+  })
+  observer.observe
+  (target,{
+    childList:true,subtree:true
+  })
+}
+
 function outputPos(map_center,x,y)
 {
   let pos = map_center.getCenter();
@@ -31,9 +58,9 @@ function markerDisplay(map,markers)
 
 function markerObserve(map){
   let target=document.getElementById('tag__datas');
-  let originMarkersL=document.getElementsByClassName('tag__data').length;
+  let originMarkersL=document.querySelectorAll('#tag__datas .tag__data').length;
   let observer = new MutationObserver(function(records){
-    let markersL=document.getElementsByClassName('tag__data').length;
+    let markersL=document.querySelectorAll('#tag__datas .tag__data').length;
     if(markersL>originMarkersL)
     {
       for(let i=0;i<records.length;i++)
@@ -41,7 +68,7 @@ function markerObserve(map){
         let marker=Array.from(records[i].addedNodes);
         markerDisplay(map,marker);
         markerAddDelete(marker);
-        originMarkersL=document.getElementsByClassName('tag__data').length;
+        originMarkersL=document.querySelectorAll('#tag__datas .tag__data').length;
       }
     }
   })
@@ -58,7 +85,7 @@ function markerAddDelete(markers)
     for(let j=0;j<popup_delete.length;j++)
     {
       let popup_delete_string=popup_delete[j].firstElementChild.firstElementChild.href;
-      if(markers[i].firstElementChild.value==popup_delete_string.slice(popup_delete_string.indexOf('/tags/')+'/tags/'.length))
+      if(markers[i].firstElementChild.innerHTML==popup_delete_string.slice(popup_delete_string.indexOf('/tags/')+'/tags/'.length))
       {
         let delete_anchor=popup_delete[j].getElementsByTagName('a');
         popup_delete[j].addEventListener('click',function(){(delete_anchor[0].style.display=="block")? delete_anchor[0].style.display="none":delete_anchor[0].style.display="block"});
@@ -81,7 +108,7 @@ if(navigator.geolocation)
       let map = L.map('mymap',{preferCanvas:true,closePopupOnClick:false}).setView([position.coords.latitude,position.coords.longitude],18);
       let xCoo=document.getElementById('x');
       let yCoo=document.getElementById('y');
-      let markers=Array.from(document.getElementsByClassName('tag__data'));
+      let markers=Array.from(document.querySelectorAll('#tag__datas .tag__data'));
 
       markerDisplay(map,markers);
 
@@ -103,7 +130,14 @@ if(navigator.geolocation)
       // }).addTo(map);
 
       if(document.getElementById("searched_tags"))
-        {markerObserve(map);}
+      {
+        markerObserve(map);
+      }
+
+      if(typeof group__datas!=='undefined')
+      {
+        tagInGropuObserve(map);
+      }
     }
   );
 }
