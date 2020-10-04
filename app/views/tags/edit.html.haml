@@ -1,0 +1,24 @@
+#tag_edit
+  #tag__datas{style:"display:none;"}
+    .tag__data
+      %span{name:"tag__id"}= @tag.id
+      %span{name:"tag__title"}= @tag.title
+      %span{name:"tag__explanation"}= @tag.explanation
+      %span{name:"tag__x"}= @tag.x
+      %span{name:"tag__y"}= @tag.y
+  = form_with url:tag_path,class: :tag_form,id: :form_tag_edit,method: :PATCH,local:true do |f|
+    = f.hidden_field :x
+    = f.hidden_field :y
+    - if user_signed_in?
+      = f.text_field :title,value:"#{@tag.title}",autofocus:true,class: :tag_form__title,autocomplete:"off"
+      = f.submit '編集',class: :tag_form__submit,id: :submit_tag__edit
+      #tag_form__group.tag_form__group
+        - @groups.each_with_index do |group,index|
+          - if index==0
+            %input{name:"group_ids[]",type:"checkbox",value:group.id,id:"group_ids_#{group.id}",checked:""}
+          - else
+            %input{name:"group_ids[]",type:"checkbox",value:group.id,id:"group_ids_#{group.id}"}
+          %label{for:"group_ids_#{group.id}"}= group.name
+      .tag_form__text
+        = f.text_area :explanation,value:"#{@tag.explanation}"
+    =link_to"削除",tag_path,method:"delete"

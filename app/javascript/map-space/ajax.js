@@ -442,9 +442,10 @@ function ajaxAutoReload()
 
 
 
-
-
-form_tag_create.addEventListener('submit',ajaxTagCreate);
+if(typeof form_tag_create!=='undefined')
+{
+  form_tag_create.addEventListener('submit',ajaxTagCreate);
+}
 
 if(typeof create_group!=='undefined')
 {

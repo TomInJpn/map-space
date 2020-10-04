@@ -1,0 +1,30 @@
+#mymap__tagedit{height:calc( var(--vh) * 50 );z-index:0;}
+
+#tag_edit{background:rgba(0,0,0,0.5);width:100vw;height:calc( var(--vh) * 50 );padding:calc( var(--vh) * 1 ) 0;overflow:hidden;position:absolute;top:calc( var(--vh) * 50 );
+  .tag_form{display:flex;flex-wrap:wrap;height:calc( var(--vh) * 4 );
+    &__title,&__submit{font-size:4vw;height:calc( var(--vh) * 4 );border:0;}
+    &__title{width:66vw;margin-left:12vw;padding:calc( var(--vh) * 1 ) 1vw;}
+    &__submit{width:20vw;margin-left:1vw;cursor:pointer;}
+    &__group{width:100vw;display:flex;overflow: scroll;
+      label{background:palevioletred;display:block;height:calc( var(--vh) * 4 );line-height:calc( var(--vh) * 4 );margin:calc( var(--vh) * 1 );padding:0 2vw;border-radius:calc( var(--vh) * 2 );font-size:4vw;color:white;white-space: nowrap;cursor:pointer;}
+      input{display:none;
+        &:checked+label{background:cornflowerblue;}
+      }
+    }
+    &__text{
+      textarea{width:98vw;height:calc( var(--vh) * 35 );margin:0 1vw;padding:calc( var(--vh) * 0.5 ) 1vw;}
+    }
+  }
+}
+
+@media screen and (min-width:481px){
+  #tag_create{
+    .tag_form{
+      &__title,&__submit{font-size:2vh;}
+      &__title{width:72vw;margin-left:6vw;}
+      &__group{
+        label{font-size:2vh;}
+      }
+    }
+  }
+}

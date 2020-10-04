@@ -1,5 +1,4 @@
 !!!
-
 %html{lang:"ja"}
   %head
     %meta{content:"text/html; charset=UTF-8","http-equiv":"Content-Type"}
@@ -16,28 +15,33 @@
 
   %body
 
-    #mymap
+    -unless params[:action]=="edit"
+      #mymap
+    -else
+      #mymap__tagedit
 
-    #center_marker
+    -unless params[:action]=="edit"
+      #center_marker
 
     = yield
 
-    %input#taggroup_checkbox{type:"checkbox",style:"display:none;"}
-    %label#tag_group--label{for:"taggroup_checkbox"}
-    #tag_create
-      = form_with url:tags_path,class: :tag_form,id: :form_tag_create,method: :post,local:true do |f|
-        = f.hidden_field :x
-        = f.hidden_field :y
-        - if user_signed_in?
-          = f.text_field :title,placeholder:'marker title',autofocus:true,class: :tag_form__title,autocomplete:"off"
-          = f.submit '作成',class: :tag_form__submit,id: :submit_tag__create
-          #tag_form__group.tag_form__group
-            -unless params[:controller]=='users/registrations'
-              - @groups.each_with_index do |group,index|
-                - if index==0
-                  %input{name:"group_ids[]",type:"checkbox",value:group.id,id:"group_ids_#{group.id}",checked:""}
-                - else
-                  %input{name:"group_ids[]",type:"checkbox",value:group.id,id:"group_ids_#{group.id}"}
-                %label{for:"group_ids_#{group.id}"}= group.name
-          .tag_form__text
-            = f.text_area :explanation
+    -unless params[:action]=="edit"
+      %input#taggroup_checkbox{type:"checkbox",style:"display:none;"}
+      %label#tag_group--label{for:"taggroup_checkbox"}
+      #tag_create
+        = form_with url:tags_path,class: :tag_form,id: :form_tag_create,method: :post,local:true do |f|
+          = f.hidden_field :x
+          = f.hidden_field :y
+          - if user_signed_in?
+            = f.text_field :title,placeholder:'marker title',autofocus:true,class: :tag_form__title,autocomplete:"off"
+            = f.submit '作成',class: :tag_form__submit,id: :submit_tag__create
+            #tag_form__group.tag_form__group
+              -unless params[:controller]=='users/registrations'
+                - @groups.each_with_index do |group,index|
+                  - if index==0
+                    %input{name:"group_ids[]",type:"checkbox",value:group.id,id:"group_ids_#{group.id}",checked:""}
+                  - else
+                    %input{name:"group_ids[]",type:"checkbox",value:group.id,id:"group_ids_#{group.id}"}
+                  %label{for:"group_ids_#{group.id}"}= group.name
+            .tag_form__text
+              = f.text_area :explanation

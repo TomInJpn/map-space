@@ -50,7 +50,7 @@ function markerDisplay(map,markers)
   for(let i=0;i<markers.length;i++)
   {
     let marker__data=markers[i].children;
-    let marker__popup=marker__data.tag__title.innerHTML+'<a rel="nofollow" data-method="delete" href="/tags/'+marker__data.tag__id.innerHTML+'" class="deleteAnchor">削除</a>';
+    let marker__popup=marker__data.tag__title.innerHTML+`<a rel="nofollow" href="/tags/${marker__data.tag__id.innerHTML}/edit" class="deleteAnchor">編集</a>`;
     marker[i]=L.marker([marker__data.tag__y.innerHTML,marker__data.tag__x.innerHTML]).addTo(map);
     marker[i].bindPopup(marker__popup,{'autoClose':false,'closeButton':false,'autoPan':false}).openPopup();
   }
@@ -79,16 +79,16 @@ function markerObserve(map){
 
 function markerAddDelete(markers)
 {
-  let popup_delete=document.getElementsByClassName('leaflet-popup-content-wrapper');
+  let popup_edit=document.getElementsByClassName('leaflet-popup-content-wrapper');
   for(let i=0;i<markers.length;i++)
   {
-    for(let j=0;j<popup_delete.length;j++)
+    for(let j=0;j<popup_edit.length;j++)
     {
-      let popup_delete_string=popup_delete[j].firstElementChild.firstElementChild.href;
-      if(markers[i].firstElementChild.innerHTML==popup_delete_string.slice(popup_delete_string.indexOf('/tags/')+'/tags/'.length))
+      let popup_edit_string=popup_edit[j].firstElementChild.firstElementChild.href;
+      if(markers[i].firstElementChild.innerHTML==popup_edit_string.match(/\/\d+\//)[0].replace(/\//g,''))
       {
-        let delete_anchor=popup_delete[j].getElementsByTagName('a');
-        popup_delete[j].addEventListener('click',function(){(delete_anchor[0].style.display=="block")? delete_anchor[0].style.display="none":delete_anchor[0].style.display="block"});
+        let edit_anchor=popup_edit[j].getElementsByTagName('a');
+        popup_edit[j].addEventListener('click',function(){(edit_anchor[0].style.display=="block")? edit_anchor[0].style.display="none":edit_anchor[0].style.display="block"});
       }
     }
   }
@@ -105,38 +105,41 @@ if(navigator.geolocation)
 	navigator.geolocation.getCurrentPosition(
     function(position)
     {
-      let map = L.map('mymap',{preferCanvas:true,closePopupOnClick:false}).setView([position.coords.latitude,position.coords.longitude],18);
-      let xCoo=document.getElementById('x');
-      let yCoo=document.getElementById('y');
-      let markers=Array.from(document.querySelectorAll('#tag__datas .tag__data'));
-
-      markerDisplay(map,markers);
-
-      markerAddDelete(markers);
-
-      outputPos(map,xCoo,yCoo);
-
-      map.on('click',function(e){map.panTo(e.latlng,{animate:true});});
-      map.on('move',function(){outputPos(map,xCoo,yCoo);});
-
-      L.tileLayer('https://tile.openstreetmap.jp/{z}/{x}/{y}.png',{
-        attribution: "<a href='http://osm.org/copyright' rel='noreferrer' target='_blank'>OpenStreetMap</a> contributors"
-      }).addTo(map);
-      // L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png',{
-      //   attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' rel='noreferrer' target='_blank'>地理院タイル</a>"
-      // }).addTo(map);
-      // L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',{
-	    //   attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
-      // }).addTo(map);
-
-      if(document.getElementById("searched_tags"))
+      if(typeof mymap!=='undefined')
       {
-        markerObserve(map);
-      }
+        let map = L.map('mymap',{preferCanvas:true,closePopupOnClick:false}).setView([position.coords.latitude,position.coords.longitude],18);
+        let xCoo=document.getElementById('x');
+        let yCoo=document.getElementById('y');
+        let markers=Array.from(document.querySelectorAll('#tag__datas .tag__data'));
 
-      if(typeof group__datas!=='undefined')
-      {
-        tagInGropuObserve(map);
+        markerDisplay(map,markers);
+
+        markerAddDelete(markers);
+
+        outputPos(map,xCoo,yCoo);
+
+        map.on('click',function(e){map.panTo(e.latlng,{animate:true});});
+        map.on('move',function(){outputPos(map,xCoo,yCoo);});
+
+        L.tileLayer('https://tile.openstreetmap.jp/{z}/{x}/{y}.png',{
+          attribution: "<a href='http://osm.org/copyright' rel='noreferrer' target='_blank'>OpenStreetMap</a> contributors"
+        }).addTo(map);
+        // L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png',{
+        //   attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' rel='noreferrer' target='_blank'>地理院タイル</a>"
+        // }).addTo(map);
+        // L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',{
+        //   attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
+        // }).addTo(map);
+
+        if(document.getElementById("searched_tags"))
+        {
+          markerObserve(map);
+        }
+
+        if(typeof group__datas!=='undefined')
+        {
+          tagInGropuObserve(map);
+        }
       }
     }
   );

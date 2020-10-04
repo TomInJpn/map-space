@@ -11,18 +11,6 @@ for(let groupData of groupDatas)
   });
 }
 
-group__menu.addEventListener('click',function()
-{
-  if(group__datas.classList.contains("close"))
-  {
-    group__datas.classList.remove("close");
-  }
-  else
-  {
-    group__datas.classList.add("close");
-  }
-});
-
 function tagsInGroup(tags,groupData)
 {
   stg=""
@@ -89,4 +77,19 @@ function gropuMenuObserve()
 if(typeof group__datas!=='undefined')
 {
   gropuMenuObserve();
+}
+
+if(typeof group__menu!=='undefined')
+{
+  group__menu.addEventListener('click',function()
+  {
+    if(group__datas.classList.contains("close"))
+    {
+      group__datas.classList.remove("close");
+    }
+    else
+    {
+      group__datas.classList.add("close");
+    }
+  });
 }

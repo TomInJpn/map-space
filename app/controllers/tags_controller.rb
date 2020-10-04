@@ -12,8 +12,17 @@ class TagsController < ApplicationController
       format.json {render json: @tag}
     end
   end
+  def edit
+    @tag=Tag.find(params[:id])
+    @groups=current_user.groups
+  end
+  def update
+    tag = Tag.find(params[:id])
+    tag.update(tag_params)
+  end
   def destroy
     Tag.find(params[:id]).destroy
+    redirect_to root_path
   end
 
   private
