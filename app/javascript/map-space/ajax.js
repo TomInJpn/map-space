@@ -456,7 +456,7 @@ if(typeof create_group!=='undefined')
 
 if(typeof tag__datas!=='undefined')
 {
-  setInterval(ajaxAutoReload,60000);
+  // setInterval(ajaxAutoReload,60000);
   // setTimeout(ajaxAutoReload,60000);
 }
 
